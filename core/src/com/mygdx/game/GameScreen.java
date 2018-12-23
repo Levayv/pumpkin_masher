@@ -115,11 +115,6 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
                 object_width,
                 object_height
         );
-//        player.x = screen_width / 2 - object_width / 2;  // center the bucket horizontally
-//        player.y = screen_height/ 2 - object_height / 2 ;
-//
-//        player.width = object_width;
-//        player.height = object_height;
         tree1 = new Tree(
                 100,
                 100,
@@ -144,26 +139,13 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         colCheck.add(tree2.rectangle);
         colCheck.add(tree3.rectangle);
 
-//        World world = new World(new Vector2(0, -10), true);
-//        Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
-
         // loading images with atlas
         atlas = new TextureAtlas(Gdx.files.internal("packed/assets.atlas"));
-//        mapSprite = new Sprite(new Texture(Gdx.files.internal("map1600x960D.png")));
-//        mapSprite.setPosition(-screen_width/2, -screen_height/2);
-//        mapSprite.setSize(world_width, world_height);
-
-        //        Sprite temp = atlas.createSprite("bucket");
         player.sprite = atlas.createSprite("bucket");
         tree1.sprite = atlas.createSprite("droplet");
         tree2.sprite = atlas.createSprite("droplet");
         tree3.sprite = atlas.createSprite("droplet");
         dropImage = atlas.createSprite("droplet");
-
-//        tree1.setSprite(new Sprite(new Texture(Gdx.files.internal("tree.png"))));
-//        tree2.setSprite(new Sprite(new Texture(Gdx.files.internal("tree.png"))));
-//        tree3.setSprite(new Sprite(new Texture(Gdx.files.internal("tree.png"))));
-
 
         // load the images for the droplet and the bucket, 64x64 pixels each
         if (debuging) System.out.println(Gdx.files.internal("droplet.png"));
@@ -175,48 +157,13 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
         rainMusic.setLooping(true);
 
-//        TextureAtlas atlas = new TextureAtlas();
-//        atlas.createSprite("road");
-//        atlas.addRegion()
-//        TextureRegion reg = new TextureRegion(bucketImage);
-//        atlas.addRegion("road2" , reg);
-//        bucketImage = atlas.get;
-
-
-        // create the camera and the SpriteBatch;l
-//        camera = new OrthographicCamera();
-//        camera.setToOrtho(false, 800, 480);
-
-        // create a Rectangle to logically represent the bucket
-//        bucket = new Rectangle();
-
-
-
-        // create the raindrops array and spawn the first raindrop
-//        raindrops = new Array<Rectangle>();
-//        spawnRaindrop();
-
-        // mapSprite init
-//        mapSprite = new Sprite(new Texture(Gdx.files.internal("map1536x1536.png")));
-//        float w = Gdx.graphics.getWidth();
-//        float h = Gdx.graphics.getHeight();
-//        camera = new OrthographicCamera(800, 480);
-
-
-        // camera init
-
-
-
-//        camera = new OrthographicCamera(screen_width, screen_height);
-//        camera.position.set(screen_width/2, screen_height/2 , 0);
-//        camera.update();
-
-        stage = new Stage();
-//        stage.setViewport(new FitViewport(screen_width, screen_height));
-        stage.setViewport(new ScreenViewport(stage.getCamera()));
-        stage.getCamera().position.set(screen_width/2, screen_height/2,0);
-//        stage = new Stage(new FitViewport(screen_width, screen_height));
+        //stage!
+        OrthographicCamera camera = new OrthographicCamera();
+        camera.setToOrtho(false, screen_width/2, screen_height/2);
+        ScreenViewport viewport1 = new ScreenViewport(camera);
+        stage = new Stage(viewport1, game.batch);
         Gdx.input.setInputProcessor(stage);
+
         shit tree1 = new shit();
 //        tree1.setDebug(true);
         tree1.setPosition(100,100);
@@ -284,9 +231,6 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 
     }
     void shittyRenderer(float delta){
-
-
-
         // clear the screen with a dark blue color.
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -297,32 +241,30 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 
         // tell the SpriteBatch to render in the
         // coordinate system specified by the camera.
-//        game.batch.setProjectionMatrix(camera.combined);
 
 
         // begin a new batch and draw ------------------------------------
-//        game.batch.begin();
-//        //Stage!
-////        stage.act(delta);
-////        stage.draw();
-//
-////        mapSprite.draw(game.batch);
-//        for (int i = 0; i < chunkSize; i++) {
-//            for (int j = 0; j < chunkSize; j++) {
-//                chunks[i][j].draw(game.batch);
-//            }
-//        }
-////        if (debuging){
-////            game.font.draw(game.batch, "FPS: "+ Gdx.graphics.getFramesPerSecond()+
-////                            "-"+( delta ),
-////                    camera.position.x-screen_width/2, camera.position.y+screen_height/2-0);
-////        }
-////        game.font.draw(game.batch, "Player Coordinates: "
-////                        + (int) player.rectangle.x + ":" + (int) player.rectangle.y ,
-////                camera.position.x-screen_width/2, camera.position.y+screen_height/2-20);
-////        game.font.draw(game.batch, "Camera Coordinates: "
-////                        + (int) camera.position.x + ":" + (int) camera.position.y ,
-////                camera.position.x-screen_width/2, camera.position.y+screen_height/2-40);
+
+
+//        game.batch.setProjectionMatrix(camera.combined);
+
+        game.batch.begin();
+        if (debuging){
+            game.font.draw(game.batch, "FPS: "+ Gdx.graphics.getFramesPerSecond()+
+                            "-"+( delta ),
+                    stage.getCamera().position.x-screen_width/2,
+                    stage.getCamera().position.y+screen_height/2-0);
+            game.font.draw(game.batch, "Player Coordinates: "
+                            + (int) player.rectangle.x + ":" + (int) player.rectangle.y ,
+                    stage.getCamera().position.x-screen_width/2, stage.getCamera().position.y+screen_height/2-20);
+            game.font.draw(game.batch, "Camera Coordinates: "
+                            + (int) stage.getCamera().position.x + ":" + (int) stage.getCamera().position.y ,
+                    stage.getCamera().position.x-screen_width/2, stage.getCamera().position.y+screen_height/2-40);
+            
+        }
+        game.batch.end();
+
+        
 //
 //        game.batch.draw(tree1.sprite, tree1.rectangle.x, tree1.rectangle.y, tree1.rectangle.width, tree1.rectangle.height);
 //        game.batch.draw(tree2.sprite, tree2.rectangle.x, tree2.rectangle.y, tree2.rectangle.width, tree2.rectangle.height);
@@ -331,7 +273,6 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 //
 //
 //
-//        game.batch.end();
 
 
     }
@@ -386,16 +327,16 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         }
         // Camera moves
         if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-            stage.getCamera().translate(-3, 0, 0);
+            stage.getCamera().translate(-6, 0, 0);
         }
         if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-            stage.getCamera().translate(3, 0, 0);
+            stage.getCamera().translate(6, 0, 0);
         }
         if (Gdx.input.isKeyPressed(Keys.DOWN)) {
-            stage.getCamera().translate(0, -3, 0);
+            stage.getCamera().translate(0, -6, 0);
         }
         if (Gdx.input.isKeyPressed(Keys.UP)) {
-            stage.getCamera().translate(0, 3, 0);
+            stage.getCamera().translate(0, 6, 0);
         }
 //        if (Gdx.input.isKeyPressed(Keys.E)) {
 //            camera.zoom += 0.12;
