@@ -3,7 +3,7 @@ package com.mygdx.game.ants.something.animated.a;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class MyAnimation {
+public class MyAnimation { //todo fix ASAP 1223
     private TextureRegion frame;
     private Animation<TextureRegion> coreAnimation;
     private float coreFrameDur;
