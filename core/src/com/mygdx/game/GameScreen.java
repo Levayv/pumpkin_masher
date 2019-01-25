@@ -408,7 +408,7 @@ public class GameScreen implements Screen {
         }
         if (Gdx.input.isKeyJustPressed(Keys.F)) {
 
-            worldManager.pumpkins[idc].go();
+            worldManager.pumpkins[idc].setGo();
             idc++;
 //            worldManager.pumpkin1.go();
 

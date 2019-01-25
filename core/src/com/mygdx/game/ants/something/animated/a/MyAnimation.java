@@ -38,24 +38,44 @@ public class MyAnimation { //todo fix ASAP 1223
             coreSequence = sequence1;
         if (state == 1)
             coreSequence = sequence2;
+//        if (loopingEndless || startAnimCycle) {
+//            if (!loopingEndless) {
+//                //checking cycle time
+//                if (coreSequence.coreFrameDur * coreSequence.coreFrames < animationTime) {
+//                    startAnimCycle = false;
+//                    animationTime = 0;
+////                System.out.println("stop" + animationTime);
+//                }
+//            }
+//            frame = coreSequence.coreAnimation.getKeyFrame(animationTime, loopingEndless);
+//        }
+//        animationTime += delta;
+
+        // todo delete , old 1/2
         if (startAnimCycle) {
-            if (coreSequence.coreFrameDur * coreSequence.coreFrames < animationTime) { // todo checking if not looping
-                startAnimCycle = false;
-                animationTime = 0;
+            if (!loopingEndless){
+                if (coreSequence.coreFrameDur * coreSequence.coreFrames < animationTime) { // todo checking if not looping
+                    startAnimCycle = false;
+                    animationTime = 0;
 //                System.out.println("stop" + animationTime);
-            } else {
+                } else {
 //                System.out.println("start" + animationTime);
-                frame = coreSequence.coreAnimation.getKeyFrame(animationTime, true);
-                animationTime += delta;
+                    frame = coreSequence.coreAnimation.getKeyFrame(animationTime, true);
+                    animationTime += delta;
+                }
             }
         } else {
             if (loopingEndless) {
-                frame = coreSequence.coreAnimation.getKeyFrame(animationTime, loopingEndless);
+                frame = coreSequence.coreAnimation.getKeyFrame(animationTime, true);
+                if (animationTime >= coreSequence.coreFrameDur * coreSequence.coreFrames)
+                    animationTime -= coreSequence.coreFrameDur * coreSequence.coreFrames;
                 animationTime += delta;
 //                System.out.println(this.getName() + " at="+ animationTime);
 //                System.out.println(this.getName() + " FD="+ coreFrameDur*coreFrames*10);
             }
         }
+
+        // todo delete , old 2/2
 //        if (state == 1){
 //            if (startAnimCycle){
 //                if (extraFrameDur * extraFrames < animationTime){ // todo checking if not looping
@@ -90,10 +110,10 @@ public class MyAnimation { //todo fix ASAP 1223
     public void setLoopingEndless(boolean loopingEndless){
         this.loopingEndless = loopingEndless;
     }
-    public boolean drawOrNot(){
-        return loopingEndless || startAnimCycle;
-//        return true;
-    }
+//    public boolean drawOrNot(){
+//        return loopingEndless || startAnimCycle;
+////       return true;
+//    }
     public void setToLastFrame(){
         frame = coreSequence.coreAnimation.getKeyFrames()[coreSequence.coreAnimation.getKeyFrames().length-1];
     }
