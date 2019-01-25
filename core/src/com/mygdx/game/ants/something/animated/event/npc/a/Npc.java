@@ -84,7 +84,8 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
 //            }
 //        }
         if (go) { //todo fix move testing
-            stateMachine.changeState(NpcState.MOVING);
+            if  (stateMachine.getCurrentState().equals(NpcState.IDLE))
+                stateMachine.changeState(NpcState.MOVING_BEGIN);
 //            int ppp = (int) current * k;
 //            current += delta * speed / points[ppp].len() *1000;
 //            current += 1000* (delta * speed / myCatmull.spanCount) / points[ppp].len();
@@ -92,7 +93,8 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
 
             if (myPath.nextDot(delta)){
                 go = false;
-                stateMachine.changeState(NpcState.IDLE);
+                if  (stateMachine.getCurrentState().equals(NpcState.MOVING))
+                    stateMachine.changeState(NpcState.MOVING_END);
 
             }else {
                 lastX = myPath.getNextX();
@@ -104,7 +106,8 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
                 set32Position(lastX , lastY);
                 time += delta;
                 if (time > 30) { //stop after 3 sec
-                    stateMachine.changeState(NpcState.IDLE);
+                    if  (stateMachine.getCurrentState().equals(NpcState.MOVING))
+                        stateMachine.changeState(NpcState.MOVING_END);
                     go = false;
                     time = 0;
                 }

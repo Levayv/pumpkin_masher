@@ -143,7 +143,7 @@ public class GameScreen implements Screen {
         WorldResAnimManager buffer2 = new WorldResAnimManager(100);
 //        buffer2.addAnimationFromFile(Entity.Temp , texAnimTemp1,8,1);
         buffer2.addAnimationFromFile(EntityAnimation.TEMP,texAnimWarning,       44 );
-        buffer2.addAnimationFromFile(EntityAnimation.PUMPKIN,texAnimPumpkin_idle,    4  );
+        buffer2.addAnimationFromFile(EntityAnimation.PUMPKIN,texAnimPumpkin_idle,    8  );
         buffer2.addAnimationFromFile(EntityAnimation.PUMPKIN_MOVING,texAnimPumpkin_move,    8  );
         buffer2.addAnimationFromFile(EntityAnimation.DOOR_OPEN,texAnimDoor2,    21 );
         buffer2.addAnimationFromFile(EntityAnimation.EXPLOSION,texAnimExplosion,0 );
